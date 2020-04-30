@@ -3,6 +3,7 @@ package pl.sytomczak.zoo.gui;
 import pl.sytomczak.zoo.Food;
 import pl.sytomczak.zoo.Vet;
 import pl.sytomczak.zoo.VetAction;
+import pl.sytomczak.zoo.animals.Animal;
 import pl.sytomczak.zoo.animals.birds.Alex;
 import pl.sytomczak.zoo.animals.birds.Parrot;
 import pl.sytomczak.zoo.animals.birds.Pigeon;
@@ -16,9 +17,15 @@ import pl.sytomczak.zoo.animals.lagomorphs.Rabbit;
 import pl.sytomczak.zoo.animals.lagomorphs.Tuptuś;
 import pl.sytomczak.zoo.animals.reptiles.Nagini;
 import pl.sytomczak.zoo.animals.reptiles.Snake;
+import pl.sytomczak.zoo.dbUtils.DBConnection;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class MainView extends JDialog {
     private JPanel contentPane;
@@ -53,6 +60,9 @@ public class MainView extends JDialog {
     private JTextField sleepTextField;
     private JLabel moveJLabel;
     private JTextField moveTextField;
+    private JLabel animalSpeciesLabel;
+    private JComboBox animalSpeciesCombobox;
+    private JLabel animalsLabel;
 
     private MiuMiu miuMiu;
     private Mufasa mufasa;
@@ -73,10 +83,14 @@ public class MainView extends JDialog {
 
     private Vet vet;
 
+    private ArrayList<String> specieNames = new ArrayList<>();
+    private ArrayList<Animal> animals = new ArrayList<>();
+
     public MainView() {
         vet = new Vet();
+        initializeSpecies();
         initializeAnimals();
-
+        
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -106,10 +120,77 @@ public class MainView extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        animalSelectionCombobox.addActionListener(e -> onSelect());
+        animalSpeciesCombobox.addActionListener(e -> animalSpeciesOnSelect());
+        animalSelectionCombobox.addActionListener(e -> animalsOnSelect());
+    }
+
+    private void initializeSpecies(){
+        if(specieNames == null)
+            specieNames = new ArrayList<>();
+        else
+            specieNames.clear();
+
+        specieNames.add("Birds");
+        specieNames.add("Canines");
+        specieNames.add("Earless Seals");
+        specieNames.add("Felines");
+        specieNames.add("Lagomorphs");
+        specieNames.add("Reptiles");
+
+        for(int i=0;i<specieNames.size();i++)
+        animalSpeciesCombobox.addItem(specieNames.get(i));
+
+//
+//import pl.sytomczak.zoo.animals.Animal;
+//import pl.sytomczak.zoo.animals.birds.Bird;
+//import pl.sytomczak.zoo.animals.birds.Pigeon;
+//
+//import java.sql.Connection;
+//import java.sql.PreparedStatement;
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
+//
+//public class ZooModel {
+//    private Connection connection;
+//
+//    public ZooModel(){
+//        this.connection = DBConnection.getConnection();
+//    }
+//
+//    public Animal getBirdByNr(Integer nr){
+//        PreparedStatement ps = null;
+//        ResultSet rs = null;
+//
+//        try{
+//            ps = this.connection.prepareStatement("SELECT * FROM birds WHERE nr = ?");
+//            ps.setInt(1, nr);
+//
+//            rs = ps.executeQuery();
+//            if(rs.next()) {
+//                Integer idSpecies = rs.getInt("isSpecies");
+//
+//                // do dorobienia tabele gatunkow np birdSpecies, canineSpecies itd. i potem sprawdzenie nazw po idSpecies i dorzucenie switcha, gdzie bedzie wybor
+//                // gatunku ptaka. mozna dodac jeszcze nameSpecies do species albo ogolnie utworzyc nowa klase Species i w niej propertiesy: id, name
+//
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//}
+
     }
 
     private void initializeAnimals() {
+
+        if(animals == null)
+            animals = new ArrayList<>();
+        else
+            animals.clear();
+
+
+
         miuMiu = new MiuMiu();
         miuMiu.setName("MiuMiu");
         miuMiu.setAge(5);
@@ -329,7 +410,12 @@ public class MainView extends JDialog {
         snake.setVetAction("");
     }
 
-    private void onSelect() {
+
+    private void animalSpeciesOnSelect() {
+        //animalSpeciesCombobox.getModel().getSelectedItem()
+    }
+
+    private void animalsOnSelect() {
         switch ((String) animalSelectionCombobox.getSelectedItem()) {
             case "MiuMiu":
                 nameTextField.setText(miuMiu.getName());

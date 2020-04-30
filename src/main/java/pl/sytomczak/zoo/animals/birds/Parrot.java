@@ -7,4 +7,3 @@ public class Parrot extends Bird {
         return "Kłi kłi";
     }
 }
-
