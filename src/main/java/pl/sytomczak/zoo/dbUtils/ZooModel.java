@@ -14,6 +14,7 @@ public class ZooModel {
 
     public ZooModel(){
         this.connection = DBConnection.getConnection();
+        // ookok
     }
 
     public Animal getBirdByNr(Integer nr){
