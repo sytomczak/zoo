@@ -90,7 +90,9 @@ public class MainView extends JDialog {
         vet = new Vet();
         initializeSpecies();
         initializeAnimals();
-        
+
+        Connection con = DBConnection.getConnection();
+
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);

@@ -23,6 +23,11 @@ public abstract class Animal implements Eatable, Moveable, Sleepable {
     private int locationX;
     private int locationY;
 
+    public void setLog(Logger log) {
+        this.log = log;
+    }
+
+    private String species;
 
     @Override
     public String eat() {
@@ -99,6 +104,10 @@ public abstract class Animal implements Eatable, Moveable, Sleepable {
         return locationY;
     }
 
+    public String getSpecies() {
+        return species;
+    }
+
     public void setFood(Food food) {
         this.food = food;
     }
@@ -122,4 +131,9 @@ public abstract class Animal implements Eatable, Moveable, Sleepable {
     public void setMale(boolean isMale) {
         this.isMale = isMale;
     }
+
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
 }

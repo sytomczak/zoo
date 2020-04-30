@@ -56,7 +56,7 @@ public class DBConnection {
             String sql = "CREATE TABLE if not exists birds (\n" +
                     "    id              INTEGER       PRIMARY KEY AUTOINCREMENT,\n" +
                     "    name            VARCHAR (100),\n" +
-                    "    idSpecies       INTEGER      ,\n" +
+                    "    species         VARCHAR (50),\n"  +
                     "    age             INTEGER,\n" +
                     "    move            VARCHAR (50),\n" +
                     "    sleep           VARCHAR (50),\n" +
@@ -76,10 +76,10 @@ public class DBConnection {
             ps.executeUpdate();
 
             // canines
-            sql = "CREATE TABLE if not exists canins (\n" +
+            sql = "CREATE TABLE if not exists canines (\n" +
                     "    id              INTEGER       PRIMARY KEY AUTOINCREMENT,\n" +
                     "    name            VARCHAR (100),\n" +
-                    "    idSpecies       INTEGER      ,\n" +
+                    "    species         VARCHAR (50),\n"  +
                     "    age             INTEGER,\n" +
                     "    move            VARCHAR (50),\n" +
                     "    sleep           VARCHAR (50),\n" +
@@ -102,7 +102,7 @@ public class DBConnection {
             sql = "CREATE TABLE if not exists earlessSeals (\n" +
                     "    id              INTEGER       PRIMARY KEY AUTOINCREMENT,\n" +
                     "    name            VARCHAR (100),\n" +
-                    "    idSpecies       INTEGER      ,\n" +
+                    "    species         VARCHAR (50),\n"  +
                     "    age             INTEGER,\n" +
                     "    move            VARCHAR (50),\n" +
                     "    sleep           VARCHAR (50),\n" +
@@ -125,7 +125,7 @@ public class DBConnection {
             sql = "CREATE TABLE if not exists felines (\n" +
                     "    id              INTEGER       PRIMARY KEY AUTOINCREMENT,\n" +
                     "    name            VARCHAR (100),\n" +
-                    "    idSpecies       INTEGER      ,\n" +
+                    "    species         VARCHAR (50),\n"  +
                     "    age             INTEGER,\n" +
                     "    move            VARCHAR (50),\n" +
                     "    sleep           VARCHAR (50),\n" +
@@ -148,7 +148,7 @@ public class DBConnection {
             sql = "CREATE TABLE if not exists lagomorphs (\n" +
                     "    id              INTEGER       PRIMARY KEY AUTOINCREMENT,\n" +
                     "    name            VARCHAR (100),\n" +
-                    "    idSpecies       INTEGER      ,\n" +
+                    "    species         VARCHAR (50),\n"  +
                     "    age             INTEGER,\n" +
                     "    move            VARCHAR (50),\n" +
                     "    sleep           VARCHAR (50),\n" +
@@ -171,7 +171,7 @@ public class DBConnection {
             sql = "CREATE TABLE if not exists reptiles (\n" +
                     "    id              INTEGER       PRIMARY KEY AUTOINCREMENT,\n" +
                     "    name            VARCHAR (100),\n" +
-                    "    idSpecies       INTEGER      ,\n" +
+                    "    species         VARCHAR (50),\n"  +
                     "    age             INTEGER,\n" +
                     "    move            VARCHAR (50),\n" +
                     "    sleep           VARCHAR (50),\n" +
@@ -189,6 +189,34 @@ public class DBConnection {
 
             ps = getConnection().prepareStatement(sql);
             ps.executeUpdate();
+
+            Statement statement = getConnection().createStatement();
+            statement.setQueryTimeout(30);  // set timeout to 30 sec.
+
+            statement.executeUpdate("INSERT INTO birdsSpecies(name) VALUES('Parrot')");
+            statement.executeUpdate("INSERT INTO birdsSpecies(name) VALUES('Pigeon')");
+
+            statement.executeUpdate("INSERT INTO caninesSpecies(name) VALUES('Dog')");
+            statement.executeUpdate("INSERT INTO caninesSpecies(name) VALUES('Wolf')");
+
+            statement.executeUpdate("INSERT INTO earlessSealsSpecies(name) VALUES('Foczi')");
+
+            statement.executeUpdate("INSERT INTO felinesSpecies(name) VALUES('Cat')");
+            statement.executeUpdate("INSERT INTO felinesSpecies(name) VALUES('Lion')");
+
+            statement.executeUpdate("INSERT INTO lagomorphsSpecies(name) VALUES('Rabbit')");
+
+            statement.executeUpdate("INSERT INTO reptilesSpecies(name) VALUES('Snake')");
+
+
+            statement.executeUpdate("INSERT INTO birds(name, species, age, move, sleep, eat, vetAction, sound, color, food, male, weight, numberOfMeals, locationXInCage, locationYInCage) VALUES('Alex', 'Parrot', 6, 'Move like animal', 'Sleep like bird', 'Eat like bird', 'SURGERY', 'Shout', 'Yellow', 'SEEDS', true, 1, 6, 5, 5)");
+            statement.executeUpdate("INSERT INTO canines(name, species, age, move, sleep, eat, vetAction, sound, color, food, male, weight, numberOfMeals, locationXInCage, locationYInCage) VALUES('Arya', 'Dog', 6, 'Move like dog', 'Sleep on back', 'Eat like canine', 'SURGERY', 'Hau Hau', 'Black', 'MEAT', false, 32, 2, 5, 5)");
+            statement.executeUpdate("INSERT INTO earlessSeals(name, species, age, move, sleep, eat, vetAction, sound, color, food, male, weight, numberOfMeals, locationXInCage, locationYInCage) VALUES('Foczi', 'Foczi', 24, 'Swim', 'Sleep like animal', 'Eat like animal', '', 'Mooore food', 'Blue', 'FISH', false, 30, 4, 2, 2)");
+            // do wypelnienia poprawnie valuesy
+            statement.executeUpdate("INSERT INTO felines(name, species, age, move, sleep, eat, vetAction, sound, color, food, male, weight, numberOfMeals, locationXInCage, locationYInCage) VALUES('Foczi', 'Foczi', 24, 'Swim', 'Sleep like animal', 'Eat like animal', '', 'Mooore food', 'Blue', 'FISH', false, 30, 4, 2, 2)");
+            statement.executeUpdate("INSERT INTO felines(name, species, age, move, sleep, eat, vetAction, sound, color, food, male, weight, numberOfMeals, locationXInCage, locationYInCage) VALUES('Foczi', 'Foczi', 24, 'Swim', 'Sleep like animal', 'Eat like animal', '', 'Mooore food', 'Blue', 'FISH', false, 30, 4, 2, 2)");
+            statement.executeUpdate("INSERT INTO lagomorphs(name, species, age, move, sleep, eat, vetAction, sound, color, food, male, weight, numberOfMeals, locationXInCage, locationYInCage) VALUES('Foczi', 'Foczi', 24, 'Swim', 'Sleep like animal', 'Eat like animal', '', 'Mooore food', 'Blue', 'FISH', false, 30, 4, 2, 2)");
+            statement.executeUpdate("INSERT INTO reptiles(name, species, age, move, sleep, eat, vetAction, sound, color, food, male, weight, numberOfMeals, locationXInCage, locationYInCage) VALUES('Foczi', 'Foczi', 24, 'Swim', 'Sleep like animal', 'Eat like animal', '', 'Mooore food', 'Blue', 'FISH', false, 30, 4, 2, 2)");
 
             return  true;
         } catch (SQLException e) {
