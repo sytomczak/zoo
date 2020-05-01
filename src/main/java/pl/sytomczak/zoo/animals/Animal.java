@@ -11,14 +11,19 @@ import java.util.logging.Logger;
 public abstract class Animal implements Eatable, Moveable, Sleepable {
     public Logger log = Logger.getLogger(this.getClass().getName());
 
+    private int id;
     private String name;
     private int age;
+    private String move;
+    private String sleep;
+    private String eat;
     private int weight;
     private boolean isMale;
     private String color;
     private int numberOfMealsInDay;
     private Food food;
     private String vetAction;
+    private String sound;
 
     private int locationX;
     private int locationY;
@@ -44,6 +49,7 @@ public abstract class Animal implements Eatable, Moveable, Sleepable {
         return "Sleep like animal";
     }
 
+    private void setId(Integer id) { this.id = id; }
     public void setName(String name) {
         this.name = name;
     }
@@ -51,6 +57,12 @@ public abstract class Animal implements Eatable, Moveable, Sleepable {
     public void setAge(int age) {
         this.age = age;
     }
+
+    public void setMove(String move) { this.move = move; }
+
+    public void setSleep(String sleep){ this.sleep = sleep;}
+
+    public void setEat(String eat){ this.eat = eat; }
 
     public void setWeight(int weight) {
         this.weight = weight;
@@ -68,6 +80,7 @@ public abstract class Animal implements Eatable, Moveable, Sleepable {
         return log;
     }
 
+    public Integer getId() { return  id; }
     public String getName() {
         return name;
     }
@@ -75,6 +88,12 @@ public abstract class Animal implements Eatable, Moveable, Sleepable {
     public int getAge() {
         return age;
     }
+
+    public String getMove() { return move; }
+
+    public String getSleep() { return sleep; }
+
+    public String getEat() { return eat; }
 
     public int getWeight() {
         return weight;
@@ -95,6 +114,8 @@ public abstract class Animal implements Eatable, Moveable, Sleepable {
     public String getVetAction() {
         return vetAction;
     }
+
+    public String getSound() { return  sound;}
 
     public int getLocationX() {
         return locationX;
@@ -127,6 +148,8 @@ public abstract class Animal implements Eatable, Moveable, Sleepable {
     public void setVetAction(String vetAction) {
         this.vetAction = vetAction;
     }
+
+    public void setSound(String sound) { this.sound = sound;}
 
     public void setMale(boolean isMale) {
         this.isMale = isMale;

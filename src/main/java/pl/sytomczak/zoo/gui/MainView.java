@@ -5,6 +5,7 @@ import pl.sytomczak.zoo.Vet;
 import pl.sytomczak.zoo.VetAction;
 import pl.sytomczak.zoo.animals.Animal;
 import pl.sytomczak.zoo.animals.birds.Alex;
+import pl.sytomczak.zoo.animals.birds.Bird;
 import pl.sytomczak.zoo.animals.birds.Parrot;
 import pl.sytomczak.zoo.animals.birds.Pigeon;
 import pl.sytomczak.zoo.animals.canine.Arya;
@@ -18,6 +19,7 @@ import pl.sytomczak.zoo.animals.lagomorphs.Tuptuś;
 import pl.sytomczak.zoo.animals.reptiles.Nagini;
 import pl.sytomczak.zoo.animals.reptiles.Snake;
 import pl.sytomczak.zoo.dbUtils.DBConnection;
+import pl.sytomczak.zoo.dbUtils.ZooModel;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -85,9 +87,11 @@ public class MainView extends JDialog {
 
     private ArrayList<String> specieNames = new ArrayList<>();
     private ArrayList<Animal> animals = new ArrayList<>();
+    private ZooModel zooModel;
 
     public MainView() {
         vet = new Vet();
+        zooModel = new ZooModel();
         initializeSpecies();
         initializeAnimals();
 
@@ -414,7 +418,19 @@ public class MainView extends JDialog {
 
 
     private void animalSpeciesOnSelect() {
-        //animalSpeciesCombobox.getModel().getSelectedItem()
+
+      try{
+          animalSelectionCombobox.removeAllItems();
+          if(animalSpeciesCombobox.getModel().getSelectedItem() == "Birds"){
+              ArrayList<Bird>  birds = zooModel.getBirds();
+              for(int i=0;i< birds.size();i++)
+                  animalSelectionCombobox.addItem(birds.get(i).getName());
+          }
+          //animalSpeciesCombobox.getModel().getSelectedItem()
+      }catch (Exception ex)
+      {
+          ex.printStackTrace();
+      }
     }
 
     private void animalsOnSelect() {
