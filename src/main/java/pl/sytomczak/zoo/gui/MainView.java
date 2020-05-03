@@ -4,29 +4,21 @@ import pl.sytomczak.zoo.Food;
 import pl.sytomczak.zoo.Vet;
 import pl.sytomczak.zoo.VetAction;
 import pl.sytomczak.zoo.animals.Animal;
-import pl.sytomczak.zoo.animals.birds.Alex;
 import pl.sytomczak.zoo.animals.birds.Bird;
 import pl.sytomczak.zoo.animals.birds.Parrot;
 import pl.sytomczak.zoo.animals.birds.Pigeon;
-import pl.sytomczak.zoo.animals.canine.Arya;
 import pl.sytomczak.zoo.animals.canine.Dog;
 import pl.sytomczak.zoo.animals.canine.Wolf;
-import pl.sytomczak.zoo.animals.earlessSeals.Foczi;
 import pl.sytomczak.zoo.animals.earlessSeals.Seal;
 import pl.sytomczak.zoo.animals.feline.*;
 import pl.sytomczak.zoo.animals.lagomorphs.Rabbit;
-import pl.sytomczak.zoo.animals.lagomorphs.Tuptuś;
 import pl.sytomczak.zoo.animals.reptiles.Nagini;
-import pl.sytomczak.zoo.animals.reptiles.Snake;
 import pl.sytomczak.zoo.dbUtils.DBConnection;
 import pl.sytomczak.zoo.dbUtils.ZooModel;
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MainView extends JDialog {
@@ -194,227 +186,8 @@ public class MainView extends JDialog {
             animals = new ArrayList<>();
         else
             animals.clear();
+        
 
-
-
-        miuMiu = new MiuMiu();
-        miuMiu.setName("MiuMiu");
-        miuMiu.setAge(5);
-        miuMiu.setColor("White");
-        miuMiu.setFood(Food.MOUSE);
-        miuMiu.setMale(true);
-        miuMiu.setWeight(7);
-        miuMiu.setNumberOfMealsInDay(20);
-        miuMiu.setVetAction(VetAction.SHOT.toString());
-
-        mufasa = new Mufasa();
-        mufasa.setName("Mufasa");
-        mufasa.setAge(7);
-        mufasa.setColor("Orange");
-        mufasa.setFood(Food.LAMB);
-        mufasa.setMale(true);
-        mufasa.setWeight(50);
-        mufasa.setNumberOfMealsInDay(1);
-        mufasa.setLocationX(1);
-        mufasa.setLocationY(1);
-
-        foczi = new Foczi();
-        foczi.setName("Foczi");
-        foczi.setAge(24);
-        foczi.setColor("Blue");
-        foczi.setFood(Food.FISH);
-        foczi.setMale(false);
-        foczi.setWeight(30);
-        foczi.setNumberOfMealsInDay(4);
-        foczi.setLocationX(2);
-        foczi.setLocationY(2);
-
-        tuptus = new Tuptuś();
-        tuptus.setName("Tuptuś");
-        tuptus.setAge(2);
-        tuptus.setColor("Gray");
-        tuptus.setFood(Food.CARROT);
-        tuptus.setMale(true);
-        tuptus.setWeight(4);
-        tuptus.setNumberOfMealsInDay(50);
-        tuptus.setLocationX(3);
-        tuptus.setLocationY(3);
-
-        nagini = new Nagini();
-        nagini.setName("Nagini");
-        nagini.setAge(120);
-        nagini.setColor("Brown");
-        nagini.setFood(Food.MEAT);
-        nagini.setMale(false);
-        nagini.setWeight(35);
-        nagini.setNumberOfMealsInDay(1);
-        nagini.setLocationX(4);
-        nagini.setLocationY(4);
-
-        alex = new Alex();
-        alex.setName("Alex");
-        alex.setAge(6);
-        alex.setColor("Yellow");
-        alex.setFood(Food.SEEDS);
-        alex.setMale(true);
-        alex.setWeight(1);
-        alex.setNumberOfMealsInDay(6);
-        alex.setLocationX(5);
-        alex.setLocationY(5);
-        alex.setVetAction(VetAction.SURGERY.toString());
-
-        arya = new Arya();
-        arya.setName("Arya");
-        arya.setAge(1);
-        arya.setColor("Black");
-        arya.setFood(Food.MEAT);
-        arya.setMale(false);
-        arya.setWeight(32);
-        arya.setNumberOfMealsInDay(2);
-
-        pigeon = new Pigeon();
-        pigeon.setName("Pigeon");
-        pigeon.setFood(Food.SEEDS);
-        pigeon.sleep();
-        pigeon.eat();
-        pigeon.fly();
-        pigeon.makeASound();
-        pigeon.setAge(0);
-        pigeon.setColor("");
-        pigeon.setMale(false);
-        pigeon.setWeight(0);
-        pigeon.setNumberOfMealsInDay(0);
-        pigeon.setLocationX(0);
-        pigeon.setLocationY(0);
-        pigeon.setVetAction("");
-
-        parrot = new Parrot();
-        parrot.setName("Parrot");
-        parrot.setFood(Food.SEEDS);
-        parrot.sleep();
-        parrot.eat();
-        parrot.fly();
-        parrot.makeASound();
-        parrot.setAge(0);
-        parrot.setColor("");
-        parrot.setMale(false);
-        parrot.setWeight(0);
-        parrot.setNumberOfMealsInDay(0);
-        parrot.setLocationX(0);
-        parrot.setLocationY(0);
-        parrot.setVetAction("");
-
-        dog = new Dog();
-        dog.setName("Dog");
-        dog.setFood(Food.LAMB);
-        dog.sleep();
-        dog.eat();
-        dog.move();
-        dog.makeASound();
-        dog.setAge(0);
-        dog.setColor("");
-        dog.setMale(false);
-        dog.setWeight(0);
-        dog.setNumberOfMealsInDay(0);
-        dog.setLocationX(0);
-        dog.setLocationY(0);
-        dog.setVetAction("");
-
-        wolf = new Wolf();
-        wolf.setName("Wolf");
-        wolf.setFood(Food.MEAT);
-        wolf.sleep();
-        wolf.eat();
-        wolf.move();
-        wolf.makeASound();
-        wolf.setAge(0);
-        wolf.setColor("");
-        wolf.setMale(false);
-        wolf.setWeight(0);
-        wolf.setNumberOfMealsInDay(0);
-        wolf.setLocationX(0);
-        wolf.setLocationY(0);
-        wolf.setVetAction("");
-
-        seal = new Seal();
-        seal.setName("Seal");
-        seal.setFood(Food.FISH);
-        seal.sleep();
-        seal.eat();
-        seal.move();
-        seal.makeASound();
-        seal.setAge(0);
-        seal.setColor("");
-        seal.setMale(false);
-        seal.setWeight(0);
-        seal.setNumberOfMealsInDay(0);
-        seal.setLocationX(0);
-        seal.setLocationY(0);
-        seal.setVetAction("");
-
-        cat = new Cat();
-        cat.setName("Dog");
-        cat.setFood(Food.MOUSE);
-        cat.sleep();
-        cat.eat();
-        cat.move();
-        cat.makeASound();
-        cat.setAge(0);
-        cat.setColor("");
-        cat.setMale(false);
-        cat.setWeight(0);
-        cat.setNumberOfMealsInDay(0);
-        cat.setLocationX(0);
-        cat.setLocationY(0);
-        cat.setVetAction("");
-
-        lion = new Lion();
-        lion.setName("Lion");
-        lion.setFood(Food.MEAT);
-        lion.sleep();
-        lion.eat();
-        lion.move();
-        lion.makeASound();
-        lion.setAge(0);
-        lion.setColor("");
-        lion.setMale(false);
-        lion.setWeight(0);
-        lion.setNumberOfMealsInDay(0);
-        lion.setLocationX(0);
-        lion.setLocationY(0);
-        lion.setVetAction("");
-
-        rabbit = new Rabbit();
-        rabbit.setName("Rabbit");
-        rabbit.setFood(Food.GRASS);
-        rabbit.sleep();
-        rabbit.eat();
-        rabbit.move();
-        rabbit.setAge(0);
-        rabbit.setColor("");
-        rabbit.setMale(false);
-        rabbit.setWeight(0);
-        rabbit.setNumberOfMealsInDay(0);
-        rabbit.setLocationX(0);
-        rabbit.setLocationY(0);
-        rabbit.setVetAction("");
-
-        snake = new Snake();
-        snake.setName("Snake");
-        snake.setFood(Food.HARRY_POTTER);
-        snake.sleep();
-        snake.eat();
-        snake.move();
-        snake.makeASound();
-        snake.setAge(0);
-        snake.setColor("");
-        snake.setMale(false);
-        snake.setWeight(0);
-        snake.setNumberOfMealsInDay(0);
-        snake.setLocationX(0);
-        snake.setLocationY(0);
-        snake.setVetAction("");
-    }
 
 
     private void animalSpeciesOnSelect() {
