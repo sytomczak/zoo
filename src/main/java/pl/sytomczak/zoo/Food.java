@@ -1,7 +1,7 @@
 package pl.sytomczak.zoo;
 
 public enum Food {
-
+    ANIMAL,
     MEAT,
     MOUSE,
     FISH,
@@ -9,5 +9,5 @@ public enum Food {
     GRASS,
     SEEDS,
     CARROT,
-    HARRY_POTTER;
+    SHRIMP
 }

@@ -75,7 +75,7 @@ public class ZooModel {
         Canine animal = null;
 
         try {
-            ps = this.connection.prepareStatement("SELECT * FROM canine WHERE id = ?");
+            ps = this.connection.prepareStatement("SELECT * FROM canines WHERE id = ?");
             ps.setInt(1, id);
 
             rs = ps.executeQuery();
@@ -300,7 +300,7 @@ public class ZooModel {
         Canine animal = null;
 
         try {
-            ps = this.connection.prepareStatement("SELECT * FROM canine WHERE name = ?");
+            ps = this.connection.prepareStatement("SELECT * FROM canines WHERE name = ?");
             ps.setString(1, name);
 
             rs = ps.executeQuery();
@@ -375,7 +375,7 @@ public class ZooModel {
         Feline animal = null;
 
         try {
-            ps = this.connection.prepareStatement("SELECT * FROM feline WHERE id = ?");
+            ps = this.connection.prepareStatement("SELECT * FROM felines WHERE id = ?");
             ps.setString(1, name);
 
             rs = ps.executeQuery();
@@ -519,13 +519,13 @@ public class ZooModel {
         return birds;
     }
 
-    public ArrayList<Canine> getCanine() {
+    public ArrayList<Canine> getCanines() {
         PreparedStatement ps = null;
         ResultSet rs = null;
         ArrayList<Canine> canines = new ArrayList<>();
 
         try {
-            ps = this.connection.prepareStatement("SELECT * FROM canine");
+            ps = this.connection.prepareStatement("SELECT * FROM canines");
             rs = ps.executeQuery();
             while (rs.next()) {
                 String species = rs.getString("species");
@@ -557,7 +557,7 @@ public class ZooModel {
         return canines;
     }
 
-    public ArrayList<Seal> getEarlessSeals() {
+    public ArrayList<Seal> getEarlessSealss() {
         PreparedStatement ps = null;
         ResultSet rs = null;
         ArrayList<Seal> seals = new ArrayList<>();
@@ -569,7 +569,7 @@ public class ZooModel {
                 String species = rs.getString("species");
 
                 if (species != "") {
-                    EarlessSealsSpecies ess = EarlessSealsSpecies.Seal.valueOf(species);
+                    EarlessSealsSpecies ess = EarlessSealsSpecies.valueOf(species);
                     switch (ess) {
                         case Seal:
                             seals.add(new Seal(rs.getInt("id"), rs.getString("name"), rs.getString("species"),
@@ -588,13 +588,13 @@ public class ZooModel {
         return seals;
     }
 
-    public ArrayList<Feline> getFeline() {
+    public ArrayList<Feline> getFelines() {
         PreparedStatement ps = null;
         ResultSet rs = null;
         ArrayList<Feline> feline = new ArrayList<>();
 
         try {
-            ps = this.connection.prepareStatement("SELECT * FROM feline");
+            ps = this.connection.prepareStatement("SELECT * FROM felines");
             rs = ps.executeQuery();
             while (rs.next()) {
                 String species = rs.getString("species");
@@ -638,7 +638,7 @@ public class ZooModel {
                 String species = rs.getString("species");
 
                 if (species != "") {
-                    LagomorphsSpecies ls = LagomorphsSpecies.Rabbit.valueOf(species);
+                    LagomorphsSpecies ls = LagomorphsSpecies.valueOf(species);
                     switch (ls) {
                         case Rabbit:
                             rabbits.add(new Rabbit(rs.getInt("id"), rs.getString("name"), rs.getString("species"),
@@ -744,7 +744,7 @@ public class ZooModel {
         ResultSet rs = null;
         try {
 
-            ps = this.connection.prepareStatement("SELECT * from canine WHERE id = ? AND name = ?");
+            ps = this.connection.prepareStatement("SELECT * from canines WHERE id = ? AND name = ?");
             ps.setInt(1, canine.getId());
             ps.setString(2, canine.getName());
             rs = ps.executeQuery();
@@ -752,7 +752,7 @@ public class ZooModel {
             if(rs.next())
                 return  false;
 
-            ps = this.connection.prepareStatement("INSERT INTO canine(name, species, age, move, sleep, eat, vetAction, sound, color, food, male, weight, numberOfMeals, locationXInCage, locationYInCage)" +
+            ps = this.connection.prepareStatement("INSERT INTO canines(name, species, age, move, sleep, eat, vetAction, sound, color, food, male, weight, numberOfMeals, locationXInCage, locationYInCage)" +
                     "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             ps.setString(1, canine.getName());
             ps.setString(2, canine.getSpecies());
@@ -1002,7 +1002,7 @@ public class ZooModel {
 
         PreparedStatement ps = null;
         try {
-            ps = this.connection.prepareStatement("UPDATE canine SET name = ?, species = ?, age = ?, move = ?, sleep = ?, eat = ?, vetAction = ?, sound = ?, color = ?, food = ?, male = ?, weight = ?, numberOfMeals = ?, locationXInCage = ?, locationYInCage = ? WHERE id = ?");
+            ps = this.connection.prepareStatement("UPDATE canines SET name = ?, species = ?, age = ?, move = ?, sleep = ?, eat = ?, vetAction = ?, sound = ?, color = ?, food = ?, male = ?, weight = ?, numberOfMeals = ?, locationXInCage = ?, locationYInCage = ? WHERE id = ?");
             ps.setString(1, canine.getName());
             ps.setString(2, canine.getSpecies());
             ps.setInt(3, canine.getAge());

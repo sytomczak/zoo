@@ -5,11 +5,13 @@ import pl.sytomczak.zoo.animals.Animal;
 import pl.sytomczak.zoo.animals.birds.Bird;
 import pl.sytomczak.zoo.animals.birds.Parrot;
 import pl.sytomczak.zoo.animals.birds.Pigeon;
+import pl.sytomczak.zoo.animals.canine.Canine;
 import pl.sytomczak.zoo.animals.canine.Dog;
 import pl.sytomczak.zoo.animals.canine.Wolf;
 import pl.sytomczak.zoo.animals.earlessSeals.Seal;
 import pl.sytomczak.zoo.animals.feline.*;
 import pl.sytomczak.zoo.animals.lagomorphs.Rabbit;
+import pl.sytomczak.zoo.animals.reptiles.Snake;
 import pl.sytomczak.zoo.dbUtils.DBConnection;
 import pl.sytomczak.zoo.dbUtils.ZooModel;
 
@@ -55,24 +57,20 @@ public class MainView extends JDialog {
     private JComboBox animalSpeciesCombobox;
     private JLabel animalsLabel;
 
-
-    private Parrot parrot;
-    private Pigeon pigeon;
-    private Dog dog;
-    private Wolf wolf;
-    private Seal seal;
-    private Cat cat;
-    private Lion lion;
-    private Rabbit rabbit;
-
-    private Vet vet;
-
     private ArrayList<String> specieNames = new ArrayList<>();
-    private ArrayList<Animal> animals = new ArrayList<>();
+    private ArrayList<Bird> birds = new ArrayList<>();
+    private ArrayList<Canine> canines = new ArrayList<>();
+    private ArrayList<Seal> seals = new ArrayList<>();
+    private ArrayList<Feline> felines = new ArrayList<>();
+
+    private ArrayList<Rabbit> rabbits = new ArrayList<>();
+    private ArrayList<Snake>  snakes = new ArrayList<>();
     private ZooModel zooModel;
 
     public MainView() {
-        vet = new Vet();
+        animalSpeciesCombobox.addActionListener(e -> animalSpeciesOnSelect());
+        animalSelectionCombobox.addActionListener(e -> animalsOnSelect());
+
         zooModel = new ZooModel();
         initializeSpecies();
         initializeAnimals();
@@ -108,8 +106,6 @@ public class MainView extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        animalSpeciesCombobox.addActionListener(e -> animalSpeciesOnSelect());
-        animalSelectionCombobox.addActionListener(e -> animalsOnSelect());
     }
 
     private void initializeSpecies(){
@@ -128,55 +124,42 @@ public class MainView extends JDialog {
         for(int i=0;i<specieNames.size();i++)
         animalSpeciesCombobox.addItem(specieNames.get(i));
 
-//
-//import pl.sytomczak.zoo.animals.Animal;
-//import pl.sytomczak.zoo.animals.birds.Bird;
-//import pl.sytomczak.zoo.animals.birds.Pigeon;
-//
-//import java.sql.Connection;
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-//
-//public class ZooModel {
-//    private Connection connection;
-//
-//    public ZooModel(){
-//        this.connection = DBConnection.getConnection();
-//    }
-//
-//    public Animal getBirdByNr(Integer nr){
-//        PreparedStatement ps = null;
-//        ResultSet rs = null;
-//
-//        try{
-//            ps = this.connection.prepareStatement("SELECT * FROM birds WHERE nr = ?");
-//            ps.setInt(1, nr);
-//
-//            rs = ps.executeQuery();
-//            if(rs.next()) {
-//                Integer idSpecies = rs.getInt("isSpecies");
-//
-//                // do dorobienia tabele gatunkow np birdSpecies, canineSpecies itd. i potem sprawdzenie nazw po idSpecies i dorzucenie switcha, gdzie bedzie wybor
-//                // gatunku ptaka. mozna dodac jeszcze nameSpecies do species albo ogolnie utworzyc nowa klase Species i w niej propertiesy: id, name
-//
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//}
-
+        animalSpeciesCombobox.setSelectedIndex(-1);
     }
 
     private void initializeAnimals() {
 
-        if (animals == null)
-            animals = new ArrayList<>();
+        if (birds == null)
+            birds = new ArrayList<>();
         else
-            animals.clear();
+            birds.clear();
 
+        if(canines == null)
+            canines = new ArrayList<>();
+        else
+            canines.clear();
+
+        if(seals == null)
+            seals = new ArrayList<>();
+        else
+            seals.clear();
+
+        if(rabbits == null)
+            rabbits = new ArrayList<>();
+        else
+            rabbits.clear();
+
+        if(snakes == null)
+            snakes = new ArrayList<>();
+        else
+            snakes.clear();
+
+        birds = zooModel.getBirds();
+        canines = zooModel.getCanines();
+        seals = zooModel.getEarlessSealss();
+        felines = zooModel.getFelines();
+        rabbits = zooModel.getLagomorps();
+        snakes = zooModel.getReptiles();
     }
 
 
@@ -184,12 +167,48 @@ public class MainView extends JDialog {
 
       try{
           animalSelectionCombobox.removeAllItems();
-          if(animalSpeciesCombobox.getModel().getSelectedItem() == "Birds"){
-              ArrayList<Bird>  birds = zooModel.getBirds();
-              for(int i=0;i< birds.size();i++)
-                  animalSelectionCombobox.addItem(birds.get(i).getName());
+          if(animalSpeciesCombobox.getSelectedIndex() == -1)
+              return;
+
+          switch (animalSpeciesCombobox.getModel().getSelectedItem().toString()) {
+              case "Birds":
+              {
+                  for(int i=0;i<birds.size();i++)
+                      animalSelectionCombobox.addItem(birds.get(i).getName());
+              }
+              break;
+              case "Canines": 
+              {
+                  for(int i=0;i<canines.size();i++)
+                      animalSelectionCombobox.addItem(canines.get(i).getName());
+              }
+              break;
+              case "Earless Seals": 
+              {
+                  for(int i=0;i<seals.size();i++)
+                      animalSelectionCombobox.addItem(seals.get(i).getName());
+              }
+              break;
+              case "Felines": 
+              {
+                  for(int i=0;i<felines.size();i++)
+                      animalSelectionCombobox.addItem(felines.get(i).getName());
+              }
+              break;
+              case "Lagomorphs": 
+              {
+                  for(int i=0;i<rabbits.size();i++)
+                      animalSelectionCombobox.addItem(rabbits.get(i).getName());
+              }
+              break;
+              case "Reptiles": 
+              {
+                  for(int i=0;i<snakes.size();i++)
+                      animalSelectionCombobox.addItem(snakes.get(i).getName());
+              }
+              break;
+
           }
-          //animalSpeciesCombobox.getModel().getSelectedItem()
       }catch (Exception ex)
       {
           ex.printStackTrace();
@@ -197,143 +216,130 @@ public class MainView extends JDialog {
     }
 
     private void animalsOnSelect() {
-        switch ((String) animalSelectionCombobox.getSelectedItem()) {
-            case "Pigeon":
-                nameTextField.setText(pigeon.getName());
-                foodTextField.setText(String.valueOf(pigeon.getFood()));
-                moveTextField.setText(pigeon.move());
-                sleepTextField.setText(pigeon.sleep());
-                eatTextField.setText(pigeon.eat());
-                soundTextField.setText(pigeon.makeASound());
-                ageTextField.setText(String.valueOf(parrot.getAge()));
-                colorTextField.setText(pigeon.getColor());
-                maleTextField.setText(String.valueOf(pigeon.isMale()));
-                weightTextField.setText(String.valueOf(pigeon.getWeight()));
-                mealsTextField.setText(String.valueOf(pigeon.getNumberOfMealsInDay()));
-                vetActionTextField.setText(String.valueOf(pigeon.getVetAction()));
-                locationXTextField.setText(String.valueOf(pigeon.getLocationX()));
-                locationYTextField.setText(String.valueOf(pigeon.getLocationY()));
-                break;
+        String animalSpecies = (String)animalSpeciesCombobox.getSelectedItem();
+        String animalName = (String) animalSelectionCombobox.getSelectedItem();
 
-            case "Parrot":
-                nameTextField.setText(parrot.getName());
-                foodTextField.setText(String.valueOf(parrot.getFood()));
-                moveTextField.setText(parrot.move());
-                sleepTextField.setText(parrot.sleep());
-                eatTextField.setText(parrot.eat());
-                soundTextField.setText(parrot.makeASound());
-                ageTextField.setText(String.valueOf(parrot.getAge()));
-                colorTextField.setText(parrot.getColor());
-                maleTextField.setText(String.valueOf(parrot.isMale()));
-                weightTextField.setText(String.valueOf(parrot.getWeight()));
-                mealsTextField.setText(String.valueOf(parrot.getNumberOfMealsInDay()));
-                vetActionTextField.setText(String.valueOf(parrot.getVetAction()));
-                locationXTextField.setText(String.valueOf(parrot.getLocationX()));
-                locationYTextField.setText(String.valueOf(parrot.getLocationY()));
-                break;
+        switch (animalSpecies) {
+            case "Birds":
+            {
+                Bird bird = null;
+                for (int i = 0; i < birds.size(); i++)
+                {
+                    if(birds.get(i).getName() == animalName) {
+                        bird = birds.get(i);
+                        break;
+                    }
+                }
+                if(bird == null)
+                    break;
 
-            case "Dog":
-                nameTextField.setText(dog.getName());
-                foodTextField.setText(String.valueOf(dog.getFood()));
-                moveTextField.setText(dog.move());
-                sleepTextField.setText(dog.sleep());
-                eatTextField.setText(dog.eat());
-                soundTextField.setText(dog.makeASound());
-                ageTextField.setText(String.valueOf(dog.getAge()));
-                colorTextField.setText(dog.getColor());
-                maleTextField.setText(String.valueOf(dog.isMale()));
-                weightTextField.setText(String.valueOf(dog.getWeight()));
-                mealsTextField.setText(String.valueOf(dog.getNumberOfMealsInDay()));
-                vetActionTextField.setText(String.valueOf(dog.getVetAction()));
-                locationXTextField.setText(String.valueOf(dog.getLocationX()));
-                locationYTextField.setText(String.valueOf(dog.getLocationY()));
-                break;
+                FillControls(bird);
+                soundTextField.setText(bird.makeASound());
+            }
+            break;
+            case "Canines":
+            {
+                Canine canine = null;
+                for (int i = 0; i < canines.size(); i++)
+                {
+                    if(canines.get(i).getName() == animalName) {
+                        canine = canines.get(i);
+                        break;
+                    }
+                }
+                if(canine == null)
+                    break;
 
-            case "Wolf":
-                nameTextField.setText(wolf.getName());
-                foodTextField.setText(String.valueOf(wolf.getFood()));
-                moveTextField.setText(wolf.move());
-                sleepTextField.setText(wolf.sleep());
-                eatTextField.setText(wolf.eat());
-                soundTextField.setText(wolf.makeASound());
-                ageTextField.setText(String.valueOf(wolf.getAge()));
-                colorTextField.setText(wolf.getColor());
-                maleTextField.setText(String.valueOf(wolf.isMale()));
-                weightTextField.setText(String.valueOf(wolf.getWeight()));
-                mealsTextField.setText(String.valueOf(wolf.getNumberOfMealsInDay()));
-                vetActionTextField.setText(String.valueOf(wolf.getVetAction()));
-                locationXTextField.setText(String.valueOf(wolf.getLocationX()));
-                locationYTextField.setText(String.valueOf(wolf.getLocationY()));
-                break;
+                FillControls(canine);
+                soundTextField.setText(canine.makeASound());
+            }
+            break;
+            case "Earless Seals":
+            {
+                Seal seal = null;
+                for (int i = 0; i < seals.size(); i++)
+                {
+                    if(seals.get(i).getName() == animalName) {
+                        seal = seals.get(i);
+                        break;
+                    }
+                }
+                if(seal == null)
+                    break;
 
-            case "Seal":
-                nameTextField.setText(seal.getName());
-                foodTextField.setText(String.valueOf(seal.getFood()));
-                moveTextField.setText(seal.move());
-                sleepTextField.setText(seal.sleep());
-                eatTextField.setText(seal.eat());
+                FillControls(seal);
                 soundTextField.setText(seal.makeASound());
-                ageTextField.setText(String.valueOf(seal.getAge()));
-                colorTextField.setText(seal.getColor());
-                maleTextField.setText(String.valueOf(seal.isMale()));
-                weightTextField.setText(String.valueOf(seal.getWeight()));
-                mealsTextField.setText(String.valueOf(seal.getNumberOfMealsInDay()));
-                vetActionTextField.setText(String.valueOf(seal.getVetAction()));
-                locationXTextField.setText(String.valueOf(seal.getLocationX()));
-                locationYTextField.setText(String.valueOf(seal.getLocationY()));
-                break;
+            }
+            break;
+            case "Felines":
+            {
+                Feline feline = null;
+                for (int i = 0; i < felines.size(); i++)
+                {
+                    if(felines.get(i).getName() == animalName) {
+                        feline = felines.get(i);
+                        break;
+                    }
+                }
+                if(feline == null)
+                    break;
 
-            case "Cat":
-                nameTextField.setText(cat.getName());
-                foodTextField.setText(String.valueOf(cat.getFood()));
-                moveTextField.setText(cat.move());
-                sleepTextField.setText(cat.sleep());
-                eatTextField.setText(cat.eat());
-                soundTextField.setText(cat.makeASound());
-                ageTextField.setText(String.valueOf(cat.getAge()));
-                colorTextField.setText(cat.getColor());
-                maleTextField.setText(String.valueOf(cat.isMale()));
-                weightTextField.setText(String.valueOf(cat.getWeight()));
-                mealsTextField.setText(String.valueOf(cat.getNumberOfMealsInDay()));
-                vetActionTextField.setText(String.valueOf(cat.getVetAction()));
-                locationXTextField.setText(String.valueOf(cat.getLocationX()));
-                locationYTextField.setText(String.valueOf(cat.getLocationY()));
-                break;
+                FillControls(feline);
+                soundTextField.setText(feline.makeASound());
+            }
+            break;
+            case "Lagomorphs":
+            {
+                Rabbit rabbit = null;
+                for (int i = 0; i < rabbits.size(); i++)
+                {
+                    if(rabbits.get(i).getName() == animalName) {
+                        rabbit = rabbits.get(i);
+                        break;
+                    }
+                }
+                if(rabbit == null)
+                    break;
 
-            case "Lion":
-                nameTextField.setText(lion.getName());
-                foodTextField.setText(String.valueOf(lion.getFood()));
-                moveTextField.setText(lion.move());
-                sleepTextField.setText(lion.sleep());
-                eatTextField.setText(lion.eat());
-                soundTextField.setText(lion.makeASound());
-                ageTextField.setText(String.valueOf(lion.getAge()));
-                colorTextField.setText(lion.getColor());
-                maleTextField.setText(String.valueOf(lion.isMale()));
-                weightTextField.setText(String.valueOf(lion.getWeight()));
-                mealsTextField.setText(String.valueOf(lion.getNumberOfMealsInDay()));
-                vetActionTextField.setText(String.valueOf(lion.getVetAction()));
-                locationXTextField.setText(String.valueOf(lion.getLocationX()));
-                locationYTextField.setText(String.valueOf(lion.getLocationY()));
-                break;
+                FillControls(rabbit);
+            }
+            break;
+            case "Reptiles":
+            {
+                Snake snake = null;
+                for (int i = 0; i < snakes.size(); i++)
+                {
+                    if(snakes.get(i).getName() == animalName) {
+                        snake = snakes.get(i);
+                        break;
+                    }
+                }
+                if(snake == null)
+                    break;
 
-            case "Rabbit":
-                nameTextField.setText(rabbit.getName());
-                foodTextField.setText(String.valueOf(rabbit.getFood()));
-                moveTextField.setText(rabbit.move());
-                sleepTextField.setText(rabbit.sleep());
-                eatTextField.setText(rabbit.eat());
-                ageTextField.setText(String.valueOf(rabbit.getAge()));
-                colorTextField.setText(rabbit.getColor());
-                maleTextField.setText(String.valueOf(rabbit.isMale()));
-                weightTextField.setText(String.valueOf(rabbit.getWeight()));
-                mealsTextField.setText(String.valueOf(rabbit.getNumberOfMealsInDay()));
-                vetActionTextField.setText(String.valueOf(rabbit.getVetAction()));
-                locationXTextField.setText(String.valueOf(rabbit.getLocationX()));
-                locationYTextField.setText(String.valueOf(rabbit.getLocationY()));
-                break;
-
+                FillControls(snake);
+            }
+            break;
         }
+    }
+
+    private void FillControls(Animal animal){
+        if(animal == null)
+            return;
+
+        nameTextField.setText(animal.getName());
+        foodTextField.setText(String.valueOf(animal.getFood()));
+        moveTextField.setText(animal.move());
+        sleepTextField.setText(animal.sleep());
+        eatTextField.setText(animal.eat());
+        ageTextField.setText(String.valueOf(animal.getAge()));
+        colorTextField.setText(animal.getColor());
+        maleTextField.setText(String.valueOf(animal.isMale()));
+        weightTextField.setText(String.valueOf(animal.getWeight()));
+        mealsTextField.setText(String.valueOf(animal.getNumberOfMealsInDay()));
+        vetActionTextField.setText(String.valueOf(animal.getVetAction()));
+        locationXTextField.setText(String.valueOf(animal.getLocationX()));
+        locationYTextField.setText(String.valueOf(animal.getLocationY()));
     }
 
     private void onOK() {
