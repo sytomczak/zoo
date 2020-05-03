@@ -1,8 +1,6 @@
 package pl.sytomczak.zoo.gui;
 
-import pl.sytomczak.zoo.Food;
 import pl.sytomczak.zoo.Vet;
-import pl.sytomczak.zoo.VetAction;
 import pl.sytomczak.zoo.animals.Animal;
 import pl.sytomczak.zoo.animals.birds.Bird;
 import pl.sytomczak.zoo.animals.birds.Parrot;
@@ -12,7 +10,6 @@ import pl.sytomczak.zoo.animals.canine.Wolf;
 import pl.sytomczak.zoo.animals.earlessSeals.Seal;
 import pl.sytomczak.zoo.animals.feline.*;
 import pl.sytomczak.zoo.animals.lagomorphs.Rabbit;
-import pl.sytomczak.zoo.animals.reptiles.Nagini;
 import pl.sytomczak.zoo.dbUtils.DBConnection;
 import pl.sytomczak.zoo.dbUtils.ZooModel;
 
@@ -58,13 +55,7 @@ public class MainView extends JDialog {
     private JComboBox animalSpeciesCombobox;
     private JLabel animalsLabel;
 
-    private MiuMiu miuMiu;
-    private Mufasa mufasa;
-    private Foczi foczi;
-    private Tuptuś tuptus;
-    private Nagini nagini;
-    private Alex alex;
-    private Arya arya;
+
     private Parrot parrot;
     private Pigeon pigeon;
     private Dog dog;
@@ -73,7 +64,6 @@ public class MainView extends JDialog {
     private Cat cat;
     private Lion lion;
     private Rabbit rabbit;
-    private Snake snake;
 
     private Vet vet;
 
@@ -182,12 +172,12 @@ public class MainView extends JDialog {
 
     private void initializeAnimals() {
 
-        if(animals == null)
+        if (animals == null)
             animals = new ArrayList<>();
         else
             animals.clear();
-        
 
+    }
 
 
     private void animalSpeciesOnSelect() {
@@ -208,115 +198,6 @@ public class MainView extends JDialog {
 
     private void animalsOnSelect() {
         switch ((String) animalSelectionCombobox.getSelectedItem()) {
-            case "MiuMiu":
-                nameTextField.setText(miuMiu.getName());
-                ageTextField.setText(String.valueOf(miuMiu.getAge()));
-                colorTextField.setText(miuMiu.getColor());
-                foodTextField.setText(String.valueOf(miuMiu.getFood()));
-                maleTextField.setText(String.valueOf(miuMiu.isMale()));
-                weightTextField.setText(String.valueOf(miuMiu.getWeight()));
-                mealsTextField.setText(String.valueOf(miuMiu.getNumberOfMealsInDay()));
-                vetActionTextField.setText(String.valueOf(miuMiu.getVetAction()));
-                soundTextField.setText(miuMiu.makeASound());
-                moveTextField.setText(miuMiu.move());
-                sleepTextField.setText(miuMiu.sleep());
-                eatTextField.setText(miuMiu.eat());
-                break;
-
-            case "Mufasa":
-                nameTextField.setText(mufasa.getName());
-                ageTextField.setText(String.valueOf(mufasa.getAge()));
-                colorTextField.setText(mufasa.getColor());
-                foodTextField.setText(String.valueOf(mufasa.getFood()));
-                maleTextField.setText(String.valueOf(mufasa.isMale()));
-                weightTextField.setText(String.valueOf(mufasa.getWeight()));
-                mealsTextField.setText(String.valueOf(mufasa.getNumberOfMealsInDay()));
-                locationXTextField.setText(String.valueOf(mufasa.getLocationX()));
-                locationYTextField.setText(String.valueOf(mufasa.getLocationY()));
-                soundTextField.setText(mufasa.makeASound());
-                moveTextField.setText(mufasa.move());
-                sleepTextField.setText(mufasa.sleep());
-                eatTextField.setText(mufasa.eat());
-                break;
-
-            case "Foczi":
-                nameTextField.setText(foczi.getName());
-                ageTextField.setText(String.valueOf(foczi.getAge()));
-                colorTextField.setText(foczi.getColor());
-                foodTextField.setText(String.valueOf(foczi.getFood()));
-                maleTextField.setText(String.valueOf(foczi.isMale()));
-                weightTextField.setText(String.valueOf(foczi.getWeight()));
-                mealsTextField.setText(String.valueOf(foczi.getNumberOfMealsInDay()));
-                locationXTextField.setText(String.valueOf(foczi.getLocationX()));
-                locationYTextField.setText(String.valueOf(foczi.getLocationY()));
-                soundTextField.setText(foczi.makeASound());
-                moveTextField.setText(foczi.move());
-                sleepTextField.setText(foczi.sleep());
-                eatTextField.setText(foczi.eat());
-                break;
-
-            case "Tuptuś":
-                nameTextField.setText(tuptus.getName());
-                ageTextField.setText(String.valueOf(tuptus.getAge()));
-                colorTextField.setText(tuptus.getColor());
-                foodTextField.setText(String.valueOf(tuptus.getFood()));
-                maleTextField.setText(String.valueOf(tuptus.isMale()));
-                weightTextField.setText(String.valueOf(tuptus.getWeight()));
-                mealsTextField.setText(String.valueOf(tuptus.getNumberOfMealsInDay()));
-                locationXTextField.setText(String.valueOf(tuptus.getLocationX()));
-                locationYTextField.setText(String.valueOf(tuptus.getLocationY()));
-                moveTextField.setText(tuptus.move());
-                sleepTextField.setText(tuptus.sleep());
-                eatTextField.setText(tuptus.eat());
-                break;
-
-            case "Nagini":
-                nameTextField.setText(nagini.getName());
-                ageTextField.setText(String.valueOf(nagini.getAge()));
-                colorTextField.setText(nagini.getColor());
-                foodTextField.setText(String.valueOf(nagini.getFood()));
-                maleTextField.setText(String.valueOf(nagini.isMale()));
-                weightTextField.setText(String.valueOf(nagini.getWeight()));
-                mealsTextField.setText(String.valueOf(nagini.getNumberOfMealsInDay()));
-                locationXTextField.setText(String.valueOf(nagini.getLocationX()));
-                locationYTextField.setText(String.valueOf(nagini.getLocationY()));
-                soundTextField.setText(nagini.makeASound());
-                moveTextField.setText(nagini.move());
-                sleepTextField.setText(nagini.sleep());
-                eatTextField.setText(nagini.eat());
-                break;
-
-            case "Alex":
-                nameTextField.setText(alex.getName());
-                ageTextField.setText(String.valueOf(alex.getAge()));
-                colorTextField.setText(alex.getColor());
-                foodTextField.setText(String.valueOf(alex.getFood()));
-                maleTextField.setText(String.valueOf(alex.isMale()));
-                weightTextField.setText(String.valueOf(alex.getWeight()));
-                mealsTextField.setText(String.valueOf(alex.getNumberOfMealsInDay()));
-                locationXTextField.setText(String.valueOf(alex.getLocationX()));
-                locationYTextField.setText(String.valueOf(alex.getLocationY()));
-                soundTextField.setText(alex.makeASound());
-                moveTextField.setText(alex.move());
-                sleepTextField.setText(alex.sleep());
-                eatTextField.setText(alex.eat());
-                vetActionTextField.setText(String.valueOf(alex.getVetAction()));
-                break;
-
-            case "Arya":
-                nameTextField.setText(arya.getName());
-                ageTextField.setText(String.valueOf(arya.getAge()));
-                colorTextField.setText(arya.getColor());
-                foodTextField.setText(String.valueOf(arya.getFood()));
-                maleTextField.setText(String.valueOf(arya.isMale()));
-                weightTextField.setText(String.valueOf(arya.getWeight()));
-                mealsTextField.setText(String.valueOf(arya.getNumberOfMealsInDay()));
-                soundTextField.setText(arya.makeASound());
-                moveTextField.setText(arya.move());
-                sleepTextField.setText(arya.sleep());
-                eatTextField.setText(arya.eat());
-                break;
-
             case "Pigeon":
                 nameTextField.setText(pigeon.getName());
                 foodTextField.setText(String.valueOf(pigeon.getFood()));
@@ -452,23 +333,6 @@ public class MainView extends JDialog {
                 locationYTextField.setText(String.valueOf(rabbit.getLocationY()));
                 break;
 
-            case "Snake":
-                nameTextField.setText(snake.getName());
-                foodTextField.setText(String.valueOf(snake.getFood()));
-                moveTextField.setText(snake.move());
-                sleepTextField.setText(snake.sleep());
-                eatTextField.setText(snake.eat());
-                soundTextField.setText(snake.makeASound());
-                ageTextField.setText(String.valueOf(snake.getAge()));
-                colorTextField.setText(snake.getColor());
-                maleTextField.setText(String.valueOf(snake.isMale()));
-                weightTextField.setText(String.valueOf(snake.getWeight()));
-                mealsTextField.setText(String.valueOf(snake.getNumberOfMealsInDay()));
-                vetActionTextField.setText(String.valueOf(snake.getVetAction()));
-                locationXTextField.setText(String.valueOf(snake.getLocationX()));
-                locationYTextField.setText(String.valueOf(snake.getLocationY()));
-                break;
-            default:
         }
     }
 

@@ -1,22 +1,22 @@
 package pl.sytomczak.zoo.animals.reptiles;
 
 import pl.sytomczak.zoo.Food;
+import pl.sytomczak.zoo.animals.Animal;
 
-public class Nagini extends Snake {
+public class Snake extends Animal {
 
     @Override
     public String eat() {
         return "Eat Harry Potter";
     }
 
-    public Nagini(){
+    public Snake(){
         setMove(move());
         setSleep(sleep());
-        setSound(makeASound());
         setEat(eat());
     }
 
-    public Nagini(Integer id, String name, String species, Integer age, String move, String sleep, String eat, String vetAction, String sound, String color, Food food, Boolean male, Integer weight, Integer numberOfMeals, Integer locationXInCage, Integer locationYInCage)
+    public Snake(Integer id, String name, String species, Integer age, String move, String sleep, String eat, String vetAction, String sound, String color, Food food, Boolean male, Integer weight, Integer numberOfMeals, Integer locationXInCage, Integer locationYInCage)
     {
         this.setNumberOfMealsInDay(id);
         this.setName(name);
